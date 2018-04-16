@@ -1,6 +1,7 @@
 const express = require('express');
 const hbs = require ('hbs');
 const app = express();
+const fs = require('fs');
 
 
 app.set('view engine', 'hbs');
@@ -9,7 +10,28 @@ app.use(express.static(__dirname + '/public'));
 hbs.registerPartials(__dirname + '/views/partials');
 
 
+//Middleware must use 'next' as an argument and must end with next();
+//This particular middleware creates a server log file
+app.use((req, res, next)=>{
+    const now = new Date().toString();
+    const log = `${now}: ${req.method} ${req.url}`
+    console.log(log);
+    fs.appendFile('server.log', log +'\n', (err) =>{
+        if (err) {
+            console.log('Unable to append server.log');
+        }
+    });
+    next();
+});
 
+app.use((req, res)=>{
+    res.render('maintenance.hbs', {
+        pageTitle: 'Maintenance'
+    });
+});
+
+
+//Instead of using multiple functions to do the same thing, you can use a helper and then inkect it in .hbs
 hbs.registerHelper('getCurrentYear', ()=>{
     return new Date().getFullYear()
 });
