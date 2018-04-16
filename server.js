@@ -24,11 +24,13 @@ app.use((req, res, next)=>{
     next();
 });
 
-app.use((req, res)=>{
+
+//If you don't use 'next', then this middleare will overrule everything else
+/* app.use((req, res)=>{
     res.render('maintenance.hbs', {
         pageTitle: 'Maintenance'
     });
-});
+}); */
 
 
 //Instead of using multiple functions to do the same thing, you can use a helper and then inkect it in .hbs
