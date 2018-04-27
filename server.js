@@ -35,10 +35,6 @@ app.use((req, res, next)=>{
 
 
 //Instead of using multiple functions to do the same thing, you can use a helper and then inkect it in .hbs
-hbs.registerHelper('getCurrentYear', ()=>{
-    return new Date().getFullYear()
-});
-
 // You can register as many helpers as you like:
 
 hbs.registerHelper('screamIt', (text)=>{
@@ -72,3 +68,9 @@ app.listen(port, ()=>{
 
     console.log(`Server is running on port ${port}`);
 });
+
+function newFunction() {
+    hbs.registerHelper('getCurrentYear', () => {
+        return new Date().getFullYear();
+    });
+}
